@@ -14,7 +14,7 @@ import hello.service.BookService;
 
 @RestController
 @RequestMapping("/api/book")
-@PreAuthorize("hasAuthority('USER')")
+//@PreAuthorize("hasAuthority('USER')")
 public class BookController {
 
     @Autowired

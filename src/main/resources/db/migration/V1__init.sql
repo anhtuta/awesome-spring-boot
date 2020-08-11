@@ -24,8 +24,8 @@ CREATE TABLE `user_role` (
   `user_id` INT NOT NULL,
   `role_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_user_role_user_id_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_user_role_role_id_idx` (`role_id` ASC) VISIBLE,
+  INDEX `fk_user_role_user_id_idx` (`user_id` ASC),
+  INDEX `fk_user_role_role_id_idx` (`role_id` ASC),
   CONSTRAINT `fk_user_role_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)

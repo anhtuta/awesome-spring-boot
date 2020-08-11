@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import hello.common.ListRes;
 import hello.common.Result;
 import hello.common.StatusType;
 import hello.entity.Book;
@@ -25,19 +26,15 @@ public class BookServiceImpl implements BookService {
     @Override
     public Result getBooks(Pageable pageable) {
         Result result = new Result();
+
         try {
             Page<Book> bookPage = bookRepository.findAll(pageable);
             List<Book> bookList = bookPage.getContent();
             long totalElements = bookPage.getTotalElements();
             int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());
 
-            Map<String, Object> meta = new HashMap<>();
-            meta.put("totalElements", totalElements);
-            meta.put("totalPages", totalPages);
-
-            result.setData(bookList);
-            result.setMeta(meta);
-            result.setStatus(StatusType.SUCCESS);
+            System.out.println("Hehe-122019339 4");
+            result.successRes(new ListRes<Book>(bookList, totalElements, totalPages));
         } catch (Exception e) {
             log.error("Fail getAllBooks: ", e);
             result.setStatus(StatusType.FAIL, e.getMessage());
