@@ -1,8 +1,6 @@
 package hello.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,7 +31,6 @@ public class BookServiceImpl implements BookService {
             long totalElements = bookPage.getTotalElements();
             int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());
 
-            System.out.println("Hehe-122019339 4");
             result.successRes(new ListRes<Book>(bookList, totalElements, totalPages));
         } catch (Exception e) {
             log.error("Fail getAllBooks: ", e);
@@ -70,12 +67,5 @@ public class BookServiceImpl implements BookService {
             result.setStatus(StatusType.FAIL, e.getMessage());
         }
         return result;
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(Math.ceil(5*1.0/3));
-        System.out.println(Math.ceil(1.66667));
-        System.out.println(Math.ceil(4.3));
-        System.out.println(Math.ceil(4.8));
     }
 }
