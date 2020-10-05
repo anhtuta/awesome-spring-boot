@@ -26,6 +26,8 @@ public class UserServiceImpl implements UserService {
                 String currentUserName = authentication.getName();
                 User user = userRepository.findByUsername(currentUserName);
                 result.successRes(user);
+            } else {
+                result.failRes(null);
             }
         } catch (Exception e) {
             result.failRes(e.getMessage());

@@ -10,6 +10,7 @@ import hello.common.ListRes;
 import hello.common.Result;
 import hello.common.StatusType;
 import hello.entity.Book;
+import hello.predicate.BookPredicate;
 import hello.repository.BookRepository;
 import hello.service.BookService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +23,12 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Override
-    public Result getBooks(Pageable pageable) {
+    public Result getBooks(Pageable pageable, String searchText) {
         Result result = new Result();
 
         try {
-            Page<Book> bookPage = bookRepository.findAll(pageable);
+            Page<Book> bookPage =
+                    bookRepository.findAll(BookPredicate.getPredicate(searchText), pageable);
             List<Book> bookList = bookPage.getContent();
             long totalElements = bookPage.getTotalElements();
             int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());

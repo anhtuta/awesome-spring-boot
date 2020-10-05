@@ -1,4 +1,4 @@
-package hello.config;
+package hello.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
