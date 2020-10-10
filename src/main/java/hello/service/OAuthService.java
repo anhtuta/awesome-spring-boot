@@ -6,4 +6,6 @@ public interface OAuthService {
 
     public Result signin();
 
+    public boolean checkNonsense(String nonsense);
+
 }

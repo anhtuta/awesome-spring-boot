@@ -11,6 +11,8 @@ public enum StatusType {
 
     // 400
     FAIL(400000, "FAIL"),
+    NONSENSE_IS_MISSING(400001, "'nonsense' header is missing"),
+    INVALID_NONSENSE(400002, "Invalid 'nonsense' header"),
 
     // 401
     UNAUTHORIZED(401000, "Oops! Unauthorized!!!"),

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import hello.common.ApiPageable;
 import hello.common.Result;
+import hello.config.aop.RequireNonsense;
 import hello.service.BookService;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -34,6 +35,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/{id}")
+    @RequireNonsense
     public Result getBook(@PathVariable("id") int id) {
         return bookService.getBook(id);
     }

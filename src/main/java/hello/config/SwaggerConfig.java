@@ -28,7 +28,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
-                .globalOperationParameters(parameterList(""));
+                .globalOperationParameters(parameterList("", "tuzaku123"));
     }
 
     private ApiInfo apiInfo() {
@@ -37,7 +37,7 @@ public class SwaggerConfig {
                 Collections.emptyList());
     }
 
-    private List<Parameter> parameterList(String acessToken) {
+    private List<Parameter> parameterList(String acessToken, String nonsense) {
         List<Parameter> list = new ArrayList<Parameter>();
         String defaultAccessTokenParam = "";
 
@@ -53,7 +53,18 @@ public class SwaggerConfig {
                 .parameterType("header")
                 .required(false)
                 .build();
+
+        Parameter param2 = new ParameterBuilder()
+                .name("nonsense")
+                .defaultValue(nonsense)
+                .description("Nonsense string")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(false)
+                .build();
+
         list.add(param1);
+        list.add(param2);
         return list;
     }
 }
