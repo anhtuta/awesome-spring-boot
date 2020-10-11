@@ -1,11 +1,27 @@
+CREATE TABLE `category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`id`));
+
 CREATE TABLE `book` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
   `author` VARCHAR(100) NOT NULL,
   `price` INT NOT NULL,
+  `category_id` INT NULL,
   `created_date` DATETIME NOT NULL DEFAULT now(),
   `modified_date` DATETIME NOT NULL DEFAULT now(),
   PRIMARY KEY (`id`));
+
+ALTER TABLE `book` 
+ADD INDEX `fk_book_category_idx` (`category_id` ASC) VISIBLE;
+
+ALTER TABLE `book` 
+ADD CONSTRAINT `fk_book_category`
+  FOREIGN KEY (`category_id`)
+  REFERENCES `category` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
 
  CREATE TABLE `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
