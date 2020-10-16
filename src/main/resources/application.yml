@@ -23,3 +23,9 @@ spring:
         format_sql: true
         type: trace
         use_sql_comments: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+uploadFolder: D:/Documents/Others/springboot-tech-upload-folder

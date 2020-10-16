@@ -1,10 +1,13 @@
 package hello.exception;
 
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import hello.common.ErrorResponse;
 
 @ControllerAdvice
@@ -17,6 +20,17 @@ public class DefaultExceptionAdvice extends ResponseEntityExceptionHandler {
 
         ErrorResponse error = new ErrorResponse(ex.getCode(), ex.getMessage());
         return ResponseEntity.status(getHttpStatus(ex.getCode())).body(error);
+    }
+    
+    @ExceptionHandler({ InvalidGrantException.class })
+    public ResponseEntity<Object> handleInvalidGrantEx(InvalidGrantException ex) {
+        // ex.printStackTrace();
+        System.out.println(ex.getMessage());
+
+        Map<String, String> error = new HashMap<>(2);
+        error.put("error", "invalid_grant");
+        error.put("error_description", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     /**

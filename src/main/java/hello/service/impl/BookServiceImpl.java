@@ -1,16 +1,16 @@
 package hello.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import hello.common.ListRes;
 import hello.common.Result;
 import hello.common.StatusType;
 import hello.entity.Book;
+import hello.predicate.BookPredicate;
 import hello.repository.BookRepository;
 import hello.service.BookService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,21 +23,17 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Override
-    public Result getBooks(Pageable pageable) {
+    public Result getBooks(Pageable pageable, String searchText) {
         Result result = new Result();
+
         try {
-            Page<Book> bookPage = bookRepository.findAll(pageable);
+            Page<Book> bookPage =
+                    bookRepository.findAll(BookPredicate.getPredicate(searchText), pageable);
             List<Book> bookList = bookPage.getContent();
             long totalElements = bookPage.getTotalElements();
             int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());
 
-            Map<String, Object> meta = new HashMap<>();
-            meta.put("totalElements", totalElements);
-            meta.put("totalPages", totalPages);
-
-            result.setData(bookList);
-            result.setMeta(meta);
-            result.setStatus(StatusType.SUCCESS);
+            result.successRes(new ListRes<Book>(bookList, totalElements, totalPages));
         } catch (Exception e) {
             log.error("Fail getAllBooks: ", e);
             result.setStatus(StatusType.FAIL, e.getMessage());
@@ -73,12 +69,5 @@ public class BookServiceImpl implements BookService {
             result.setStatus(StatusType.FAIL, e.getMessage());
         }
         return result;
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(Math.ceil(5*1.0/3));
-        System.out.println(Math.ceil(1.66667));
-        System.out.println(Math.ceil(4.3));
-        System.out.println(Math.ceil(4.8));
     }
 }
