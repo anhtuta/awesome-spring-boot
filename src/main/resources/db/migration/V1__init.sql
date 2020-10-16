@@ -14,7 +14,7 @@ CREATE TABLE `book` (
   PRIMARY KEY (`id`));
 
 ALTER TABLE `book` 
-ADD INDEX `fk_book_category_idx` (`category_id` ASC) VISIBLE;
+ADD INDEX `fk_book_category_idx` (`category_id` ASC);
 
 ALTER TABLE `book` 
 ADD CONSTRAINT `fk_book_category`

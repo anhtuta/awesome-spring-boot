@@ -47,13 +47,4 @@ public class OAuthServiceImpl implements OAuthService {
         return new ResponseEntity<OAuth2AccessToken>(oAuth2AccessToken, headers, HttpStatus.OK);
     }
 
-    /**
-     * This checking is just for demo! Tất cả API có annotation RequireNonsense đều phải gửi kèm 1
-     * header nonsense là 1 string bắt đầu = 'tuzaku'
-     */
-    @Override
-    public boolean checkNonsense(String nonsense) {
-        return nonsense.startsWith("tuzaku");
-    }
-
 }

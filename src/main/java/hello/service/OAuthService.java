@@ -8,6 +8,4 @@ public interface OAuthService {
 
     public ResponseEntity<OAuth2AccessToken> signin(SigninRequest signinRequest);
 
-    public boolean checkNonsense(String nonsense);
-
 }

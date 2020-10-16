@@ -15,7 +15,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/book")
-//@PreAuthorize("hasAuthority('USER')")
+// @PreAuthorize("hasAuthority('USER')")
 public class BookController {
 
     @Autowired
@@ -23,8 +23,7 @@ public class BookController {
 
     @GetMapping
     @ApiPageable
-    public Result getBooks(
-            @ApiIgnore Pageable pageable,
+    public Result getBooks(@ApiIgnore Pageable pageable,
             @RequestParam(required = false) String searchText) {
         return bookService.getBooks(pageable, searchText);
     }
@@ -37,6 +36,12 @@ public class BookController {
     @GetMapping(value = "/{id}")
     @RequireNonsense
     public Result getBook(@PathVariable("id") int id) {
+        return bookService.getBook(id);
+    }
+
+    @GetMapping(value = "/by-id/{id}")
+    @RequireNonsense(prefix = "hehe")
+    public Result getBookById(@PathVariable("id") int id) {
         return bookService.getBook(id);
     }
 }
