@@ -5,7 +5,7 @@ import hello.common.Result;
 
 public interface BookService {
 
-    public Result getBooks(Pageable pageable);
+    public Result getBooks(Pageable pageable, String searchText);
 
     public Result getAllBooks();
 
