@@ -13,7 +13,7 @@ import hello.common.ErrorResponse;
 @ControllerAdvice
 public class DefaultExceptionAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ RestException.class })
+    @ExceptionHandler({RestException.class})
     public ResponseEntity<Object> handleRestEx(RestException ex) {
         // ex.printStackTrace();
         System.out.println(ex.getMessage());
@@ -21,8 +21,8 @@ public class DefaultExceptionAdvice extends ResponseEntityExceptionHandler {
         ErrorResponse error = new ErrorResponse(ex.getCode(), ex.getMessage());
         return ResponseEntity.status(getHttpStatus(ex.getCode())).body(error);
     }
-    
-    @ExceptionHandler({ InvalidGrantException.class })
+
+    @ExceptionHandler({InvalidGrantException.class})
     public ResponseEntity<Object> handleInvalidGrantEx(InvalidGrantException ex) {
         // ex.printStackTrace();
         System.out.println(ex.getMessage());
