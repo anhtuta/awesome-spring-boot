@@ -16,7 +16,7 @@ public class OAuthController {
     private OAuthService oAuthService;
 
     @PostMapping("/signin")
-    public ResponseEntity<OAuth2AccessToken> getMe(@RequestBody SigninRequest signinRequest) {
+    public ResponseEntity<OAuth2AccessToken> signin(@RequestBody SigninRequest signinRequest) {
         return oAuthService.signin(signinRequest);
     }
 }
