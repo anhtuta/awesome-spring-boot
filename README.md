@@ -20,5 +20,6 @@ keytool -genkeypair -alias tuzaku -keyalg RSA -keysize 2048 -storetype PKCS12 -k
 ```
 
 # Refs:
-- Ref: https://www.thomasvitale.com/https-spring-boot-ssl-certificate/
+- https://www.thomasvitale.com/https-spring-boot-ssl-certificate/
 - https://www.baeldung.com/rest-api-search-language-spring-data-querydsl
+- https://www.baeldung.com/spring-security-integration-tests
