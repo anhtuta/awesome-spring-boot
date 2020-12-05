@@ -22,6 +22,8 @@ public class BootTechAspect {
      * header nonsense là 1 string bắt đầu = giá trị của thuộc tính prefix trong annotation @RequireNonsense.
      * Giá trị mặc định đó = 'tuzaku'!
      * Note: value = @annotation(requireNons) chứ ko phải @annotation(RequireNonsense) nhé!
+     * Dùng @annotation(RequireNonsense) thì ko thêm được tham số thứ 2 (RequireNonsense requireNons)
+     * vào method checkNonsense
      */
     @Before(value = "@annotation(requireNons)")
     public void checkNonsense(JoinPoint joinPoint, RequireNonsense requireNons) {

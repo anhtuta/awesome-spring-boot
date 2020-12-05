@@ -1,0 +1,31 @@
+redis:
+  host: localhost
+  port: 6379
+
+server:
+  port: 9010
+  servlet:
+    context-path: /boot-tech
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot_tech?characterEncoding=utf8&verifyServerCertificate=false&useSSL=true
+    username: root
+    password: 5555
+  jackson:
+    serialization:
+      indent-output: true
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        type: trace
+        use_sql_comments: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+uploadFolder: D:/Documents/Others/springboot-tech-upload-folder
