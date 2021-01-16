@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import hello.common.Result;
 import hello.service.FileService;
 import hello.utils.MediaTypeUtils;
+import hello.utils.ObjectUtils;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -78,16 +79,16 @@ public class FileServiceImpl implements FileService {
     @Override
     public ResponseEntity<ByteArrayResource> getFile(String name) {
         MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, name);
- 
+
         Path path = Paths.get(uploadFolder + "/" + name);
         byte[] data;
         try {
             data = Files.readAllBytes(path);
             ByteArrayResource resource = new ByteArrayResource(data);
-            
+
             return ResponseEntity.ok()
                     // Content-Disposition
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + ObjectUtils.getOrDefaultStr(path.getFileName()))
                     // Content-Type
                     .contentType(mediaType) //
                     // Content-Lengh
