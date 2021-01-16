@@ -19,7 +19,7 @@ public enum StatusType {
     UNAUTHORIZED(401000, "Oops! Unauthorized!!!"),
 
     // 403
-    FORBIDDEN(403000, "Oops! Unauthorized!!!"),
+    FORBIDDEN(403000, "Access denied: Forbidden!"),
 
     // 404
     BOOK_NOT_FOUND(404001, "Book not found"),
