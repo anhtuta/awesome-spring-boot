@@ -13,9 +13,11 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import hello.common.StatusType;
 import hello.exception.RestException;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Aspect
+@Slf4j
 public class BootTechAspect {
     /**
      * This checking is just for demo! Tất cả API có annotation RequireNonsense đều phải gửi kèm 1
@@ -45,11 +47,13 @@ public class BootTechAspect {
     }
 
     /**
-     * Định nghĩa pointcut: thực hiện pointcut với tất cả các method trong class BookController.
-     * Nếu đổi thành "execution(* hello.controller.abc(..))" thì nó chỉ thực hiện với method abc
+     * Định nghĩa pointcut: thực hiện pointcut với tất cả các method trong package hello.controller
+     * - Nếu đổi thành "execution(* hello.controller.BookController.*(..))" thì nó chỉ thực hiện
+     *   các method trong class BookController
+     * - Nếu đổi thành "execution(* hello.controller.abc(..))" thì nó chỉ thực hiện với method abc
      * @return 
      */
-    @Pointcut("execution(* hello.controller.BookController.*(..))")
+    @Pointcut("execution(* hello.controller..*.*(..))")
     public void bookControllerPointcut() {
     }
 
@@ -70,7 +74,7 @@ public class BootTechAspect {
 
         // After advice
         long afterRun = System.currentTimeMillis();
-        System.out.println("Calling method: " + pjp.getSignature().getName() + " within "
+        log.info("Calling method: " + pjp.getSignature().getName() + " within "
                 + (afterRun - beforeRun) + " ms");
 
         // Sao phải return kq của hàm proceed nhỉ? Search trên Google nhiều trang nó
