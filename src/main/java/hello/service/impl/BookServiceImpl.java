@@ -25,6 +25,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Result getBooks(Pageable pageable, String searchText) {
         Result result = new Result();
+        log.debug("BookServiceImpl.getBooks");
 
         try {
             Page<Book> bookPage =
@@ -43,6 +44,8 @@ public class BookServiceImpl implements BookService {
 
     public Result getAllBooks() {
         Result result = new Result();
+        log.debug("BookServiceImpl.getAllBooks");
+
         try {
             List<Book> bookList = bookRepository.findAll();
             result.setData(bookList);
@@ -56,6 +59,8 @@ public class BookServiceImpl implements BookService {
 
     public Result getBook(int id) {
         Result result = new Result();
+        log.debug("BookServiceImpl.getBook");
+
         try {
             Optional<Book> bookOp = bookRepository.findById(id);
             if (bookOp.isPresent()) {
