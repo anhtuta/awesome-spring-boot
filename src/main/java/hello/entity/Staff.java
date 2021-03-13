@@ -43,4 +43,8 @@ public class Staff {
     @JsonProperty(access = Access.WRITE_ONLY)
     @JoinColumn(name = "store_id")
     private Store store;
+
+    public String getStoreName() {
+        return store.getName();
+    }
 }
