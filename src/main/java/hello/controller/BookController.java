@@ -16,7 +16,6 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/book")
-@PreAuthorize("hasAuthority('USER')")
 public class BookController {
 
     @Autowired
@@ -24,24 +23,28 @@ public class BookController {
 
     @GetMapping
     @ApiPageable
+    @PreAuthorize("hasAuthority('USER')")
     public Result getBooks(@ApiIgnore Pageable pageable,
             @RequestParam(required = false) String searchText) {
         return bookService.getBooks(pageable, searchText);
     }
 
     @GetMapping(value = "/all")
+    @PreAuthorize("hasAuthority('USER')")
     public Result getAllBooks() {
         return bookService.getAllBooks();
     }
 
     @GetMapping(value = "/{id}")
     @RequireNonsense
+    @PreAuthorize("hasAuthority('USER')")
     public Result getBook(@PathVariable("id") int id) {
         return bookService.getBook(id);
     }
 
     @GetMapping(value = "/by-id/{id}")
     @RequireNonsense(prefix = "hehe")
+    @PreAuthorize("hasAuthority('USER')")
     public Result getBookById(@PathVariable("id") int id) {
         return bookService.getBook(id);
     }
