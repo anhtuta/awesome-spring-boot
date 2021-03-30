@@ -18,7 +18,7 @@ import hello.common.Result;
 import hello.common.StatusType;
 import hello.config.security.AuthorizationServerConfig;
 import hello.exception.RestException;
-import hello.model.SigninRequest;
+import hello.model.request.SigninRequest;
 import hello.service.OAuthService;
 
 @Service

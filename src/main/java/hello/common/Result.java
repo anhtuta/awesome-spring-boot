@@ -17,23 +17,26 @@ public class Result {
 
     private Object meta;
 
-    public void successRes(Object data) {
+    public Result successRes(Object data) {
         this.code = StatusType.SUCCESS.getCode();
         this.message = StatusType.SUCCESS.getMessage();
         this.data = data;
+        return this;
     }
 
-    public void successRes(Object data, Object meta) {
+    public Result successRes(Object data, Object meta) {
         this.code = StatusType.SUCCESS.getCode();
         this.message = StatusType.SUCCESS.getMessage();
         this.data = data;
         this.meta = meta;
+        return this;
     }
 
-    public void failRes(Object data) {
+    public Result failRes(Object data) {
         this.code = StatusType.FAIL.getCode();
         this.message = StatusType.FAIL.getMessage();
         this.data = data;
+        return this;
     }
 
     public void setStatus(StatusType statusType) {

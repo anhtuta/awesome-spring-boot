@@ -67,7 +67,7 @@ CREATE TABLE `staff` (
   `gender` VARCHAR(45) NOT NULL DEFAULT 'unknown' COMMENT '{\"male\", \"female\", \"gay\", \"lesbian\", \"unknown\"}',
   `email` VARCHAR(50) NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_staff_store_idx` (`store_id` ASC) VISIBLE,
+  INDEX `fk_staff_store_idx` (`store_id` ASC),
   CONSTRAINT `fk_staff_store`
     FOREIGN KEY (`store_id`)
     REFERENCES `store` (`id`)
