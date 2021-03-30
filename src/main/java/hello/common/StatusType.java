@@ -11,6 +11,7 @@ public enum StatusType {
 
     // 400
     FAIL(400000, "FAIL"),
+    BAD_REQUEST(400001, "Bad request"),
     NONSENSE_IS_MISSING(400001, "'nonsense' header is missing"),
     INVALID_NONSENSE(400002, "Invalid 'nonsense' header"),
     INVALID_AUTHORIZATION_HEADER(400003, "Invalid authorization header"),
@@ -23,6 +24,7 @@ public enum StatusType {
 
     // 404
     BOOK_NOT_FOUND(404001, "Book not found"),
+    CATEGORY_NOT_FOUND(404002, "Category not found"),
 
     // 500
     INTERNAL_SERVER_ERROR(500000, "INTERNAL SERVER ERROR!");

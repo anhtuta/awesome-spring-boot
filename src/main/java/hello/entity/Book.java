@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -43,18 +45,28 @@ public class Book {
 
     @Column(name = "modified_date")
     private Date modifiedDate;
-    
+
     @ManyToOne
     @JsonProperty(access = Access.WRITE_ONLY)
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     public String getFormatCreatedDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         return sdf.format(createdDate);
     }
-    
+
     public String getCategoryName() {
         return category.getName();
+    }
+
+    @PrePersist
+    public void genCreateAndModifyDate() {
+        this.createdDate = this.modifiedDate = new Date();
+    }
+
+    @PreUpdate
+    public void genModifyDate() {
+        this.modifiedDate = new Date();
     }
 }

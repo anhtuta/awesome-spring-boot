@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import hello.common.Result;
-import hello.model.SigninRequest;
+import hello.model.request.SigninRequest;
 import hello.service.OAuthService;
 
 @RestController
