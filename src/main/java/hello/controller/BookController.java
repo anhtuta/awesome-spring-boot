@@ -1,5 +1,8 @@
 package hello.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -64,10 +67,14 @@ public class BookController {
     // @PreAuthorize("hasAuthority('BOOK_MANAGER')")
     public Result createBook(@Valid @RequestBody BookRequest bookRequest,
             BindingResult bindingResult) {
+    	List<String> errorList = new ArrayList<>();
         bindingResult.getFieldErrors().forEach(fieldError -> {
             log.error(fieldError.getField() + ": " + fieldError.getDefaultMessage());
-            throw new RestException(StatusType.BAD_REQUEST, fieldError.getDefaultMessage());
+            errorList.add(fieldError.getDefaultMessage());
         });
+        if(errorList.size() != 0) {
+            throw new RestException(StatusType.BAD_REQUEST, String.join(", ", errorList));
+        }
         return bookService.createBook(bookRequest);
     }
 

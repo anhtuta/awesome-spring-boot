@@ -5,7 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import hello.common.ListRes;
 import hello.common.Result;
@@ -34,8 +37,15 @@ public class BookServiceImpl implements BookService {
     public Result getBooks(Pageable pageable, String searchText) {
         log.debug("BookServiceImpl.getBooks");
         Result result = new Result();
+        Sort sort;
+        if(pageable.getSort().isUnsorted()) {
+            sort = Sort.by(Direction.DESC, "id");
+        } else {
+            sort = pageable.getSort();
+        }
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         Page<Book> bookPage =
-                bookRepository.findAll(BookPredicate.getPredicate(searchText), pageable);
+                bookRepository.findAll(BookPredicate.getPredicate(searchText), pageRequest);
         List<Book> bookList = bookPage.getContent();
         long totalElements = bookPage.getTotalElements();
         int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());
