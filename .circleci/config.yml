@@ -62,11 +62,11 @@ workflows:
           filters:  # using regex filters requires the entire branch to match
             branches:
               only:  # only branches matching the below regex filters will run
-                - dev
-          context: Local
-      - build_product:
-          filters:
-            branches:
-              only:
                 - master
-          context: Product
+          context: Local
+#      - build_product:
+#          filters:
+#            branches:
+#              only:
+#                - master
+#          context: Product

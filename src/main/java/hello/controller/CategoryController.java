@@ -17,7 +17,7 @@ public class CategoryController {
 
     @GetMapping(value = "/all")
     @PreAuthorize("hasAuthority('USER')")
-    public Result getAllCategorys() {
+    public Result getAllCategories() {
         return categoryService.getAllCategories();
     }
 
