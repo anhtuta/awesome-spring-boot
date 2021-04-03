@@ -64,7 +64,7 @@ public class BookController {
     }
 
     @PostMapping
-    // @PreAuthorize("hasAuthority('BOOK_MANAGER')")
+    @PreAuthorize("hasAuthority('BOOK_MANAGER')")
     public Result createBook(@Valid @RequestBody BookRequest bookRequest,
             BindingResult bindingResult) {
         List<String> errorList = new ArrayList<>();
@@ -79,7 +79,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    // @PreAuthorize("hasAuthority('BOOK_MANAGER')")
+    @PreAuthorize("hasAuthority('BOOK_MANAGER')")
     public Result updateBook(@PathVariable("id") int id,
             @Valid @RequestBody BookRequest bookRequest, BindingResult bindingResult) {
         bindingResult.getFieldErrors().forEach(fieldError -> {
@@ -90,7 +90,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    // @PreAuthorize("hasAuthority('BOOK_MANAGER')")
+    @PreAuthorize("hasAuthority('BOOK_MANAGER')")
     public Result updateBook(@PathVariable("id") int id) {
         return bookService.deleteBook(id);
     }

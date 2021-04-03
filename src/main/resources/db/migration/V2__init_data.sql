@@ -24,6 +24,7 @@ INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES ('4', '1', '3');
 INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES ('5', '3', '3');
 INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES ('6', '4', '2');
 INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES ('7', '4', '4');
+INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES ('8', '1', '4');
 
 INSERT INTO `store` (`id`, `name`, `address`) VALUES ('1', 'Tiki', 'Hà Nội');
 INSERT INTO `store` (`id`, `name`, `address`) VALUES ('2', 'Lazada', 'Đà Nẵng');
