@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,11 +41,7 @@ public class Staff {
     private Byte isAlive;
 
     @ManyToOne
-    @JsonProperty(access = Access.WRITE_ONLY)
     @JoinColumn(name = "store_id")
     private Store store;
 
-    public String getStoreName() {
-        return store.getName();
-    }
 }
