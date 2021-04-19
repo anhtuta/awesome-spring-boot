@@ -73,3 +73,6 @@ CREATE TABLE `staff` (
     REFERENCES `store` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+ALTER TABLE `staff` 
+ADD COLUMN `is_alive` TINYINT NULL COMMENT 'is_alive = 1: alive\nis_alive = 0: deceased' AFTER `email`;

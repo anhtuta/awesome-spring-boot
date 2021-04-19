@@ -39,6 +39,9 @@ public class Staff {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "is_alive")
+    private Byte isAlive;
+
     @ManyToOne
     @JsonProperty(access = Access.WRITE_ONLY)
     @JoinColumn(name = "store_id")
