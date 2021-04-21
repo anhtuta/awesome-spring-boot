@@ -1,4 +1,4 @@
-package hello.model;
+package hello.model.response;
 
 import java.util.Set;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

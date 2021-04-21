@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- legends:
+    %green(): color
+    %highlight(): đặt màu tùy thuộc vào level log: ERROR: bold-red, WARN: red, INFO: blue, other levels: default color
+    %d{HH:mm:ss.SSS}: a timestamp with hours, minutes, seconds and milliseconds
+    [%thread]: the thread name generating the log message, surrounded by square brackets
+    %-5level: the level of the logging event, padded to 5 characters (được đệm tới 5 ký tự)
+    %logger{36}: the name of the logger, truncated to 36 characters (được cắt ngắn còn 36 ký tự)
+    %M: outputs the method name where the logging request was issued.
+    %msg: message chính
+    %n: ngắt dòng (tùy vào platform)
+    Ref: http://logback.qos.ch/manual/layouts.html#conversionWord
+    
+    Để ghi log vào file, ta cần config FileAppender. Với việc sử dụng FileAppender, tất cả log sẽ được ghi vào một file,
+    điều này có thể dẫn đến file sẽ rất lớn qua thời gian:
+    <appender name="SAVE-TO-FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/boot-tech.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${FILE_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+    
+    Các tốt hơn là ta sử dụng RollingFileAppender, giúp tạo từng file log riêng biệt theo ngày, tháng...
+    Định dạng format trong cặp thẻ %d cũng sẽ quy định thời gian rolling,
+    ví dụ "dd-MM-yyyy" sẽ rolling theo ngày hoặc "MM-yyyy" sẽ rolling theo tháng,
+    hoặc khi kích thước file đạt tới giới hạn nào đó, hoặc kết hợp cả hai.
+-->
+
+<configuration>
+
+    <property name="CONSOLE_PATTERN" value="%green(%d{dd-MM-yyyy HH:mm:ss.SSS}) %highlight(%-5level) %magenta([%thread]) %-64cyan(%logger{36}.%M) - %msg%n" />
+    <property name="FILE_PATTERN" value="%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n" />
+    <property name="USER_LOG_HOME" value="logs" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- This appender contains normal log (info, warn, error) -->
+    <appender name="FILE_APPENDER_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${USER_LOG_HOME}/boot-tech.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${USER_LOG_HOME}/boot-tech-%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>    <!-- keep 30 days' worth of history -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- This appender contains only error log, using filter tag to do that -->
+    <appender name="FILE_APPENDER_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${USER_LOG_HOME}/boot-tech-error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${USER_LOG_HOME}/boot-tech-error-%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_PATTERN}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <!-- This appender contains only hibernate queries -->
+    <appender name="FILE_APPENDER_QUERY" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${USER_LOG_HOME}/boot-tech-query.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${USER_LOG_HOME}/boot-tech-query-%d{yyyyMMdd}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- show hibernate sql, using additivity="false" so this log is only sent to appender-ref inside this tag
+        (to avoid this log is displayed at root tag again) -->
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE_APPENDER_QUERY" />
+    </logger>
+
+    <!-- Show hibernate query params -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" additivity="false">
+        <appender-ref ref="FILE_APPENDER_QUERY" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE_APPENDER_INFO" />
+        <appender-ref ref="FILE_APPENDER_ERROR" />
+    </root>
+
+</configuration>

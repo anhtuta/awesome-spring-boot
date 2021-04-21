@@ -1,0 +1,72 @@
+# Java Maven CircleCI 2.0 configuration file
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+version: 2
+jobs:
+  build_local:
+    # These next lines define a docker executor: https://circleci.com/docs/2.0/executor-types/
+    # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # Be sure to update the docker image tag below to openjdk version of your application.
+    # A list of available CircleCI docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/openjdk
+    docker:
+      - image: circleci/openjdk:8u232-jdk
+    working_directory: ~/sbt # means "SpringBootTech"
+    environment:
+      MAVEN_OPTS: -Xmx3200m # Customize the JVM maximum heap limit
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ checksum "pom.xml" }} # appends cache key with a hash of pom.xml file
+            - maven-repo-v1- # fallback in case previous cache key is not found
+      - run:
+          name: Build
+          command: mvn clean package -DskipTests -Dspring.profiles.active=${SBT_PROFILE}  # Or using -Dmaven.test.skip=true
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ checksum "pom.xml" }}
+      - store_artifacts:
+          path: target
+
+  build_product:
+    docker:
+      - image: circleci/openjdk:8u232-jdk
+    working_directory: ~/sbt
+    environment:
+      MAVEN_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ checksum "pom.xml" }}
+            - maven-repo-v1-
+      - run:
+          name: Run test
+          command: mvn test
+      - run:
+          name: Build
+          command: mvn clean package -DskipTests -Dspring.profiles.active=${SBT_PROFILE}
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ checksum "pom.xml" }}
+      - store_artifacts:
+          path: target
+
+workflows:
+  version: 2
+  sample-workflow:
+    jobs:
+      - build_local:
+          filters:  # using regex filters requires the entire branch to match
+            branches:
+              only:  # only branches matching the below regex filters will run
+                - master
+          context: Local
+#      - build_product:
+#          filters:
+#            branches:
+#              only:
+#                - master
+#          context: Product

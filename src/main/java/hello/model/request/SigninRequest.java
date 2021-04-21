@@ -1,4 +1,4 @@
-package hello.model;
+package hello.model.request;
 
 import lombok.Getter;
 import lombok.Setter;

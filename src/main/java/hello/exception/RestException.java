@@ -20,4 +20,9 @@ public class RestException extends RuntimeException {
         this.code = stt.getCode();
         this.message = stt.getMessage();
     }
+
+    public RestException(StatusType stt, String message) {
+        this.code = stt.getCode();
+        this.message = message;
+    }
 }

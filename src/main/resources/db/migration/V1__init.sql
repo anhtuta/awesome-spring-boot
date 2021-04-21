@@ -52,4 +52,27 @@ CREATE TABLE `user_role` (
     REFERENCES `role` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-  
+
+CREATE TABLE `store` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(200) NULL,
+  `address` VARCHAR(500) NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `staff` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `store_id` INT NOT NULL,
+  `first_name` VARCHAR(200) NOT NULL,
+  `last_name` VARCHAR(200) NOT NULL,
+  `gender` VARCHAR(45) NOT NULL DEFAULT 'unknown' COMMENT '{\"male\", \"female\", \"gay\", \"lesbian\", \"unknown\"}',
+  `email` VARCHAR(50) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_staff_store_idx` (`store_id` ASC),
+  CONSTRAINT `fk_staff_store`
+    FOREIGN KEY (`store_id`)
+    REFERENCES `store` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+ALTER TABLE `staff` 
+ADD COLUMN `is_alive` TINYINT NULL COMMENT 'is_alive = 1: alive\nis_alive = 0: deceased' AFTER `email`;
