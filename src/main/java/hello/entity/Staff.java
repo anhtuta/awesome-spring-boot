@@ -7,7 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import org.springframework.util.StringUtils;
+import hello.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,5 +46,12 @@ public class Staff {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
+
+    @PrePersist
+    public void setDefaultGender() {
+        if(StringUtils.isEmpty(gender)) {
+            gender = Constants.Genders.UNKNOWN;
+        }
+    }
 
 }

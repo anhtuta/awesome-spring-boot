@@ -25,6 +25,8 @@ public enum StatusType {
     // 404
     BOOK_NOT_FOUND(404001, "Book not found"),
     CATEGORY_NOT_FOUND(404002, "Category not found"),
+    STAFF_NOT_FOUND(404003, "Staff not found"),
+    STORE_NOT_FOUND(404004, "Store"),
 
     // 500
     INTERNAL_SERVER_ERROR(500000, "INTERNAL SERVER ERROR!");
