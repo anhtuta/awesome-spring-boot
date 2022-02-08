@@ -4,6 +4,11 @@ Spring Boot pratice with lots of technologies
 # Swagger local
 http://localhost:9010/boot-tech/swagger-ui.html
 
+# How to use
+- First, run Redis if bean TokenStore using `RedisTokenStore` instead of `InMemoryTokenStore`
+- Then, get access token via this API: http://localhost:9010/boot-tech/signin. All default accounts (in first run using flyway) have password = "1111"
+- Use acccess token to call APIs
+
 # Technologies are used
 - Swagger
 - Flyway

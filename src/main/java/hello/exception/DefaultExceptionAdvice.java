@@ -13,6 +13,11 @@ import hello.common.ErrorResponse;
 import hello.common.StatusType;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 
+ * Dùng AOP để xử lý exception: mọi exception của app sẽ đi qua class này, và việc
+ * return response nếu có exception cũng do class này thực hiện, chứ ko phải controller nữa
+ */
 @ControllerAdvice
 @Slf4j
 public class DefaultExceptionAdvice extends ResponseEntityExceptionHandler {
