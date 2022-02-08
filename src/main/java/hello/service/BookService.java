@@ -1,6 +1,5 @@
 package hello.service;
 
-import javax.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import hello.common.Result;
 import hello.model.request.BookRequest;
