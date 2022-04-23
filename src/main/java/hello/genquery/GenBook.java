@@ -10,22 +10,27 @@ import java.util.Calendar;
 import hello.utils.NumberUtils;
 import hello.utils.StrUtils;
 
-/**
+/*
  * Gen query to insert testing data for `book` table in database test
- * Note: must use database `sbt_test`
+ * Note: must use database `sbt_test`.
+ * 
  * After running this class, a SQL file will be generated, go to that folder
  * (ex: D:/ProgramData/sbt/sql/book.sql), open terminal, then run the following cmd:
  * mysql -u root -p sbt_test < book.sql
- * Enter password to generate data
  * 
- * @author anhtu
+ * Enter password to generate data.
+ * Note: if it returns the following error:
+ * ERROR 2006 (HY000) at line 1: MySQL server has gone away
+ * 
+ * Then you should change the config max_allowed_packet > file size, ref:
+ * https://stackoverflow.com/a/12792977/7688028
  */
 public class GenBook {
 
     public static void main(String[] args) throws IOException {
         final int INIT_ID = 123;
-        final int TOTAL_ROWS = 1000000;
-        final int CHUNK = 1000; // number of rows to insert each query
+        final int TOTAL_ROWS = 100;// 1000000;
+        final int CHUNK = 10;// 1000; // number of rows to insert each query
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
@@ -52,7 +57,7 @@ public class GenBook {
                 String title = StrUtils.getRandomLorem(NumberUtils.getRandomInt(2, 7));
                 String author = StrUtils.getRandomFullname();
                 int price = NumberUtils.getRandomInt(20, 500) * 1000;
-                sql = String.format("('%d', '%s', '%s', '%d', '%s', '%s')",
+                sql = String.format("('%s', '%s', '%s', '%s', '%s', '%s')",
                         INIT_ID + j, title, author, price, createdDate, createdDate);
                 if (j < end - 1)
                     sql += ",";
@@ -62,7 +67,6 @@ public class GenBook {
                 bw.newLine();
             }
         }
-
 
         bw.close();
         fos.close();
