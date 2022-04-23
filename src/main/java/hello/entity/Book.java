@@ -2,27 +2,26 @@ package hello.entity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "book")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Book {
 
     @Id
@@ -44,9 +43,13 @@ public class Book {
     @Column(name = "modified_date")
     private Date modifiedDate;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "book_category",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JsonIgnore
+    private Set<Category> categories;
 
     public String getFormatCreatedDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");

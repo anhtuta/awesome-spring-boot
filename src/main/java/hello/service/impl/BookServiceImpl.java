@@ -1,7 +1,9 @@
 package hello.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,12 +40,13 @@ public class BookServiceImpl implements BookService {
         log.debug("BookServiceImpl.getBooks");
         Result result = new Result();
         Sort sort;
-        if(pageable.getSort().isUnsorted()) {
+        if (pageable.getSort().isUnsorted()) {
             sort = Sort.by(Direction.DESC, "id");
         } else {
             sort = pageable.getSort();
         }
-        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        PageRequest pageRequest =
+                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         Page<Book> bookPage =
                 bookRepository.findAll(BookPredicate.getPredicate(searchText), pageRequest);
         List<Book> bookList = bookPage.getContent();
@@ -54,6 +57,7 @@ public class BookServiceImpl implements BookService {
         return result;
     }
 
+    @Override
     public Result getAllBooks() {
         log.debug("BookServiceImpl.getAllBooks");
         Result result = new Result();
@@ -63,6 +67,7 @@ public class BookServiceImpl implements BookService {
         return result;
     }
 
+    @Override
     public Result getBook(int id) {
         log.debug("BookServiceImpl.getBook");
         Result result = new Result();
@@ -83,9 +88,12 @@ public class BookServiceImpl implements BookService {
             throw new RestException(StatusType.CATEGORY_NOT_FOUND);
         }
 
+        Set<Category> cateSet = new HashSet<>();
+        cateSet.add(categoryOp.get());
+
         Book newBook = new Book();
         BeanUtils.copyProperties(bookRequest, newBook);
-        newBook.setCategory(categoryOp.get());
+        newBook.setCategories(cateSet);
         bookRepository.save(newBook);
         return new Result().successRes(null);
     }
@@ -102,9 +110,12 @@ public class BookServiceImpl implements BookService {
             throw new RestException(StatusType.CATEGORY_NOT_FOUND);
         }
 
+        Set<Category> cateSet = new HashSet<>();
+        cateSet.add(categoryOp.get());
+
         Book updateBook = bookOp.get();
         BeanUtils.copyProperties(bookRequest, updateBook);
-        updateBook.setCategory(categoryOp.get());
+        updateBook.setCategories(cateSet);
         bookRepository.save(updateBook);
         return new Result().successRes(null);
     }
