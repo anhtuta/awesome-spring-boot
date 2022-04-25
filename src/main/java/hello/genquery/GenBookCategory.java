@@ -25,9 +25,9 @@ import hello.utils.NumberUtils;
 public class GenBookCategory {
 
     public static void main(String[] args) throws IOException {
-        final int INIT_BOOK_ID = 114;
+        final int INIT_BOOK_ID = 1034128;    // Replace by MAX(book.id) + 1
         final int TOTAL_ROWS = 1000000;
-        final int CHUNK = 1000; // number of rows to insert each query
+        final int CHUNK = 10000; // number of rows to insert each query
 
         String insertQuery =
                 "INSERT INTO `sbt_test`.`book_category` (`book_id`, `category_id`, `vote_count`) VALUES ";

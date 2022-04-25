@@ -1,5 +1,6 @@
 package hello.service.impl;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,7 @@ import hello.entity.Book;
 import hello.entity.Category;
 import hello.exception.RestException;
 import hello.model.request.BookRequest;
+import hello.model.response.BookDetail;
 import hello.predicate.BookPredicate;
 import hello.repository.BookRepository;
 import hello.repository.CategoryRepository;
@@ -54,6 +56,31 @@ public class BookServiceImpl implements BookService {
         int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());
 
         result.successRes(new ListRes<Book>(bookList, totalElements, totalPages));
+        return result;
+    }
+
+    @Override
+    public Result getBookDetails(Pageable pageable, String searchText) {
+        log.debug("BookServiceImpl.getBookDetails");
+        Result result = new Result();
+        Sort sort;
+        if (pageable.getSort().isUnsorted()) {
+            sort = Sort.by(Direction.DESC, "id");
+        } else {
+            sort = pageable.getSort();
+        }
+        PageRequest pageRequest =
+                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        Page<BookDetail> bookPage = bookRepository.getBookDetails(pageRequest);
+        List<BookDetail> bookList = bookPage.getContent();
+        for (BookDetail bd : bookList) {
+            bd.setCategoryNames(Arrays.asList(bd.getCategoryStr().split(";")));
+        }
+
+        long totalElements = bookPage.getTotalElements();
+        int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());
+
+        result.successRes(new ListRes<BookDetail>(bookList, totalElements, totalPages));
         return result;
     }
 

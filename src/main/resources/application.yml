@@ -1,4 +1,4 @@
 spring:
   profiles:
 #    active: prd
-    active: local,swagger
+    active: test,swagger
