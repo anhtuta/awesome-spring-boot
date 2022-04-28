@@ -1,8 +1,8 @@
 package hello.service.impl;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.BeanUtils;
@@ -20,7 +20,6 @@ import hello.entity.Book;
 import hello.entity.Category;
 import hello.exception.RestException;
 import hello.model.request.BookRequest;
-import hello.model.response.BookDetail;
 import hello.predicate.BookPredicate;
 import hello.repository.BookRepository;
 import hello.repository.CategoryRepository;
@@ -37,6 +36,7 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    // This one has error
     @Override
     public Result getBooks(Pageable pageable, String searchText) {
         log.debug("BookServiceImpl.getBooks");
@@ -71,16 +71,13 @@ public class BookServiceImpl implements BookService {
         }
         PageRequest pageRequest =
                 PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-        Page<BookDetail> bookPage = bookRepository.getBookDetails(pageRequest);
-        List<BookDetail> bookList = bookPage.getContent();
-        for (BookDetail bd : bookList) {
-            bd.setCategoryNames(Arrays.asList(bd.getCategoryStr().split(";")));
-        }
+        Page<Map<String, Object>> bookPage = bookRepository.getBookDetails(pageRequest);
+        List<Map<String, Object>> bookList = bookPage.getContent();
 
         long totalElements = bookPage.getTotalElements();
         int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());
 
-        result.successRes(new ListRes<BookDetail>(bookList, totalElements, totalPages));
+        result.successRes(new ListRes<Map<String, Object>>(bookList, totalElements, totalPages));
         return result;
     }
 

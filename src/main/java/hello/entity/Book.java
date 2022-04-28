@@ -1,6 +1,5 @@
 package hello.entity;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
@@ -50,11 +49,6 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     @JsonIgnore
     private Set<Category> categories;
-
-    public String getFormatCreatedDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        return sdf.format(createdDate);
-    }
 
     @PrePersist
     public void genCreateAndModifyDate() {
