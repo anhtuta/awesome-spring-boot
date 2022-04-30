@@ -27,7 +27,7 @@ import hello.utils.StrUtils;
  */
 public class GenBook {
 
-    public static void main(String[] args) throws IOException {
+    public static void genQuery() throws IOException {
         final int INIT_ID = 1034128;    // Replace by MAX(book.id) + 1
         final int TOTAL_ROWS = 1000000;
         final int CHUNK = 10000; // number of rows to insert each query

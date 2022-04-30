@@ -67,7 +67,7 @@ Page<BookDetail> getBookDetails(Pageable pageable);
 
 (Giả sử như có class BookDetail với các field tương ứng với các cột trong query trên! Vẫn KHÔNG dùng được!)
 
-Tất nhiên có cách, nhưng phải add thêm config, mapper, tham khảo các link bên dưới
+Tất nhiên có cách, chẳng hạn dùng `@NamedNativeQuery` và `@SqlResultSetMapping`, nhưng trông chả đẹp mắt tý nào!!! Tham khảo các link bên dưới
 
 Ref:
 - https://stackoverflow.com/questions/55513776/create-spring-repository-without-entity
