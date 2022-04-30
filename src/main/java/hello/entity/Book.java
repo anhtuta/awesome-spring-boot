@@ -1,7 +1,7 @@
 package hello.entity;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,7 +48,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     @JsonIgnore
-    private Set<Category> categories;
+    private List<Category> categories;
 
     @PrePersist
     public void genCreateAndModifyDate() {

@@ -44,7 +44,7 @@ public class StrUtils {
             "curabitur", "lectus", "elementum", "tempor", "risus", "cras"};
 
     public static String getRandomInArray(String[] arr) {
-        return arr[NumberUtils.getRandomInt(0, arr.length - 1)];
+        return arr[NumUtils.getRandomInt(0, arr.length - 1)];
     }
 
     public static String getRandomLorem(int length) {

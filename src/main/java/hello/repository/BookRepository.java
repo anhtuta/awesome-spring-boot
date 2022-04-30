@@ -33,10 +33,9 @@ public interface BookRepository
                     + "FROM book b "
                     + "LEFT JOIN book_category bc "
                     + "    ON b.id = bc.book_id "
-                    + "INNER JOIN category c "
+                    + "LEFT JOIN category c "
                     + "    ON bc.category_id = c.id "
-                    + "GROUP BY b.id "
-                    + "ORDER BY b.id",
+                    + "GROUP BY b.id",
             countQuery = "SELECT count(id) FROM book")
     Page<Map<String, Object>> getBookDetails(Pageable pageable);
 

@@ -8,7 +8,7 @@ INSERT INTO `category` (`id`, `name`) VALUES ('7', 'Giả tưởng');
 INSERT INTO `category` (`id`, `name`) VALUES ('8', 'Huyền bí');
 INSERT INTO `category` (`id`, `name`) VALUES ('9', 'Kinh dị');
 INSERT INTO `category` (`id`, `name`) VALUES ('10', 'Trinh thám');
-INSERT INTO `category` (`id`, `name`) VALUES ('11', 'Lãng mank');
+INSERT INTO `category` (`id`, `name`) VALUES ('11', 'Lãng mạn');
 INSERT INTO `category` (`id`, `name`) VALUES ('12', 'Light novel');
 INSERT INTO `category` (`id`, `name`) VALUES ('13', 'Tâm lý');
 INSERT INTO `category` (`id`, `name`) VALUES ('14', 'Hài');
