@@ -106,3 +106,7 @@ Thì query cột đó, data vẫn null!
         countQuery = "SELECT count(id) FROM book")
 Page<Book> getBookDetails(Pageable pageable);
 ```
+
+## Last pagination JPA doesn't call count query
+
+Thật vậy, nếu có 1 API phân trang, giả sử totalRow = 34, pageSize = 10, tức là có 4 page. Thì page cuối cùng (pageNum=3 & pageSize=10) nó sẽ ko gọi countQuery nữa! (Đã test với trường hợp `nativeQuery = true`). Có lẽ nó tự tính được totalRow, tính dễ mà! Một sự tối ưu nho nhỏ!

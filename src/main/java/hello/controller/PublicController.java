@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import hello.common.Result;
-import hello.utils.NumberUtils;
+import hello.utils.NumUtils;
 import hello.utils.StrUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,25 +47,25 @@ public class PublicController {
                 }
             }
             p.setName(name);
-            p.setDescription(StrUtils.getRandomLorem(NumberUtils.getRandomInt(32, 45)));
-            p.setCategoryId(NumberUtils.getRandomInt(1, 5));
+            p.setDescription(StrUtils.getRandomLorem(NumUtils.getRandomInt(32, 45)));
+            p.setCategoryId(NumUtils.getRandomInt(1, 5));
             p.setSlug(p.getName().toLowerCase().replaceAll(" ", "-"));
             p.setSku(p.getSlug());
-            p.setHeroImg(IMAGE_FOLDER + NumberUtils.getRandomInt(1, TOTAL_IMAGES) + ".jpg");
-            p.setImages(getRandomImageArray(NumberUtils.getRandomInt(4, 10)));
-            p.setPrice(NumberUtils.getRandomInt(1000, 20000) * 1000);
+            p.setHeroImg(IMAGE_FOLDER + NumUtils.getRandomInt(1, TOTAL_IMAGES) + ".jpg");
+            p.setImages(getRandomImageArray(NumUtils.getRandomInt(4, 10)));
+            p.setPrice(NumUtils.getRandomInt(1000, 20000) * 1000);
             p.setOriginalPrice(p.getPrice());   // 30% sản phẩm sẽ ko được sale
-            if (NumberUtils.getRandomInt(1, 100) > 70) {
+            if (NumUtils.getRandomInt(1, 100) > 70) {
                 // Chỉ có 70% sản phẩm được sale
-                salePc = NumberUtils.getRandomInArray(SALE_PERCENTAGES);
+                salePc = NumUtils.getRandomInArray(SALE_PERCENTAGES);
                 System.out.println("i = " + i + ", salePc = " + salePc);
                 originalPrice = (int) ((p.getPrice() / 1000) / (1 - salePc * 1.0 / 100)) * 1000;
                 System.out.println("Sale off " + (100 - p.getPrice() * 100 / originalPrice) + "%");
                 p.setOriginalPrice(originalPrice);
             }
-            p.setQuantity(NumberUtils.getRandomInt(10, 100));
+            p.setQuantity(NumUtils.getRandomInt(10, 100));
             p.setColor(StrUtils.getRandomInArray(COLORS));
-            p.setMeta(StrUtils.getRandomLorem(NumberUtils.getRandomInt(12, 20)));
+            p.setMeta(StrUtils.getRandomLorem(NumUtils.getRandomInt(12, 20)));
 
             products.add(p);
         }
@@ -81,7 +81,7 @@ public class PublicController {
         for (int i = 0; i < length; i++) {
             while (true) {
                 loopCnt++;
-                int ran = NumberUtils.getRandomInt(1, TOTAL_IMAGES);
+                int ran = NumUtils.getRandomInt(1, TOTAL_IMAGES);
                 // check trùng nhau tối đa 10000 lần thôi! Nếu sau 10000 lần gen số ngẫu nhiên
                 // mà vẫn gen phải số có rồi thì đành chọn nó :v
                 if (!isExist[ran] || loopCnt == 10000) {

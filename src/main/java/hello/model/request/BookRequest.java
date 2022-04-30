@@ -1,5 +1,6 @@
 package hello.model.request;
 
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,5 +18,5 @@ public class BookRequest {
     private Integer price;
 
     @NotNull(message = "categoryId cannot be null or empty")
-    private Integer categoryId;
+    private List<Integer> categoryIds;
 }

@@ -1,10 +1,9 @@
 package hello.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
+import javax.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -106,40 +105,43 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public Result createBook(BookRequest bookRequest) {
-        Optional<Category> categoryOp = categoryRepository.findById(bookRequest.getCategoryId());
-        if (!categoryOp.isPresent()) {
+        // Check if exist categories
+        List<Integer> categoryIds = bookRequest.getCategoryIds();
+        Integer isExist = categoryRepository.checkExist(categoryIds);
+        if (isExist == null) {
             throw new RestException(StatusType.CATEGORY_NOT_FOUND);
         }
 
-        Set<Category> cateSet = new HashSet<>();
-        cateSet.add(categoryOp.get());
-
+        // Create book
         Book newBook = new Book();
         BeanUtils.copyProperties(bookRequest, newBook);
-        newBook.setCategories(cateSet);
+        List<Category> categories = categoryRepository.findAllById(categoryIds);
+        newBook.setCategories(categories);
         bookRepository.save(newBook);
         return new Result().successRes(null);
     }
 
     @Override
     public Result updateBook(int id, BookRequest bookRequest) {
+        // Check if exist book
         Optional<Book> bookOp = bookRepository.findById(id);
         if (!bookOp.isPresent()) {
             throw new RestException(StatusType.BOOK_NOT_FOUND);
         }
 
-        Optional<Category> categoryOp = categoryRepository.findById(bookRequest.getCategoryId());
-        if (!categoryOp.isPresent()) {
+        // Check if exist categories
+        List<Integer> categoryIds = bookRequest.getCategoryIds();
+        Integer isExist = categoryRepository.checkExist(categoryIds);
+        if (isExist == null) {
             throw new RestException(StatusType.CATEGORY_NOT_FOUND);
         }
 
-        Set<Category> cateSet = new HashSet<>();
-        cateSet.add(categoryOp.get());
-
         Book updateBook = bookOp.get();
         BeanUtils.copyProperties(bookRequest, updateBook);
-        updateBook.setCategories(cateSet);
+        List<Category> categories = categoryRepository.findAllById(categoryIds);
+        updateBook.setCategories(categories);
         bookRepository.save(updateBook);
         return new Result().successRes(null);
     }

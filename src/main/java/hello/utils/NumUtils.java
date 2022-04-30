@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class NumberUtils {
+public class NumUtils {
 
     private static final int MAX_TIME_TO_GEN = 100000;
 

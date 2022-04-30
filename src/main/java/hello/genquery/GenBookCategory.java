@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Set;
-import hello.utils.NumberUtils;
+import hello.utils.NumUtils;
 
 /*
  * Note: book_id phải tồn tại, nếu ko sẽ lỗi FK. Do đó phải gen data cho table book trước, rồi mới
@@ -48,12 +48,12 @@ public class GenBookCategory {
             // System.out.printf("i=%d, start=%d, end=%d\n", i, start, end);
             for (int j = start; j < end; j++) {
                 Set<Integer> cateSet =
-                        NumberUtils.getRandomSetInt(NumberUtils.getRandomInt(1, 4), 1, 14);
+                        NumUtils.getRandomSetInt(NumUtils.getRandomInt(1, 4), 1, 14);
                 sql = "";
                 int cnt = 0;
                 for (Integer cate : cateSet) {
                     sql += String.format("('%s', '%s', '%s')",
-                            INIT_BOOK_ID + j, cate, NumberUtils.getRandomInt(100, 1000));
+                            INIT_BOOK_ID + j, cate, NumUtils.getRandomInt(100, 1000));
                     cnt++;
                     if (cnt < cateSet.size())
                         sql += ",";

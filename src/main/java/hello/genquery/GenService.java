@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import hello.utils.NumberUtils;
+import hello.utils.NumUtils;
 import hello.utils.StrUtils;
 
 /**
@@ -64,9 +64,9 @@ public class GenService {
             // System.out.printf("i=%d, start=%d, end=%d\n", i, start, end);
             for (int j = start; j < end; j++) {
                 // How to handle these dynamic data? Using @FunctionalInterface?
-                String title = StrUtils.getRandomLorem(NumberUtils.getRandomInt(2, 7));
+                String title = StrUtils.getRandomLorem(NumUtils.getRandomInt(2, 7));
                 String author = StrUtils.getRandomFullname();
-                int price = NumberUtils.getRandomInt(20, 500) * 1000;
+                int price = NumUtils.getRandomInt(20, 500) * 1000;
                 sql = String.format("('%s', '%s', '%s', '%s', '%s', '%s')",
                         initID + j, title, author, price, createdDate, createdDate);
                 if (j < end - 1)
