@@ -27,10 +27,10 @@ import hello.utils.StrUtils;
  */
 public class GenBook {
 
-    public static void main(String[] args) throws IOException {
-        final int INIT_ID = 123;
-        final int TOTAL_ROWS = 100;// 1000000;
-        final int CHUNK = 10;// 1000; // number of rows to insert each query
+    public static void genQuery() throws IOException {
+        final int INIT_ID = 1034128;    // Replace by MAX(book.id) + 1
+        final int TOTAL_ROWS = 1000000;
+        final int CHUNK = 10000; // number of rows to insert each query
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();

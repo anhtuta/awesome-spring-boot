@@ -2,7 +2,6 @@ package hello.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +40,14 @@ public class BookController {
     public Result getBooks(@ApiIgnore Pageable pageable,
             @RequestParam(required = false) String searchText) {
         return bookService.getBooks(pageable, searchText);
+    }
+
+    @GetMapping("/detail")
+    @ApiPageable
+    @PreAuthorize("hasAuthority('USER')")
+    public Result getBookDetails(@ApiIgnore Pageable pageable,
+            @RequestParam(required = false) String searchText) {
+        return bookService.getBookDetails(pageable, searchText);
     }
 
     @GetMapping(value = "/all")

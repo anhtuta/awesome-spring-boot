@@ -8,6 +8,8 @@ public interface BookService {
 
     public Result getBooks(Pageable pageable, String searchText);
 
+    public Result getBookDetails(Pageable pageable, String searchText);
+
     public Result getAllBooks();
 
     public Result getBook(int id);

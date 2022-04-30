@@ -2,6 +2,7 @@ package hello.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +36,7 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    // This one has error
     @Override
     public Result getBooks(Pageable pageable, String searchText) {
         log.debug("BookServiceImpl.getBooks");
@@ -54,6 +56,28 @@ public class BookServiceImpl implements BookService {
         int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());
 
         result.successRes(new ListRes<Book>(bookList, totalElements, totalPages));
+        return result;
+    }
+
+    @Override
+    public Result getBookDetails(Pageable pageable, String searchText) {
+        log.debug("BookServiceImpl.getBookDetails");
+        Result result = new Result();
+        Sort sort;
+        if (pageable.getSort().isUnsorted()) {
+            sort = Sort.by(Direction.DESC, "id");
+        } else {
+            sort = pageable.getSort();
+        }
+        PageRequest pageRequest =
+                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        Page<Map<String, Object>> bookPage = bookRepository.getBookDetails(pageRequest);
+        List<Map<String, Object>> bookList = bookPage.getContent();
+
+        long totalElements = bookPage.getTotalElements();
+        int totalPages = (int) Math.ceil(totalElements * 1.0 / pageable.getPageSize());
+
+        result.successRes(new ListRes<Map<String, Object>>(bookList, totalElements, totalPages));
         return result;
     }
 
