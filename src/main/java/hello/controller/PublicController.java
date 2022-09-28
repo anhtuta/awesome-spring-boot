@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import hello.common.Result;
+import hello.config.aop.RequireNonsense;
 import hello.utils.NumUtils;
 import hello.utils.StrUtils;
 import lombok.Getter;
@@ -26,6 +27,18 @@ public class PublicController {
     @GetMapping("hello-world")
     public Result helloWorld() {
         return new Result().successRes("Hello world!");
+    }
+
+    @GetMapping("goodbye-world")
+    @RequireNonsense(prefix = "demo_prefix")
+    public Result goodbyeWorld() {
+        return new Result().successRes("Goodbye world!");
+    }
+
+    @GetMapping("say-haha")
+    @RequireNonsense
+    public Result sayHaha() {
+        return new Result().successRes("Hahaha haha ha!!!");
     }
 
     @GetMapping("/nmvn/product/all")

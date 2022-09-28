@@ -9,7 +9,7 @@ CREATE TABLE `book_category` (
   `category_id` INT NOT NULL,
   `vote_count` INT NULL DEFAULT 0 COMMENT 'Số lượng người dùng vote cho cuốn sách book_id thuộc thể loại category_id',
   PRIMARY KEY (`book_id`, `category_id`),
-  INDEX `book_category_category_fk_idx` (`category_id` ASC) VISIBLE,
+  INDEX `book_category_category_fk_idx` (`category_id` ASC),
   CONSTRAINT `book_category_book_fk`
     FOREIGN KEY (`book_id`)
     REFERENCES `book` (`id`)

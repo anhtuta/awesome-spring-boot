@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Documented
 public @interface RequireNonsense {
 
-    String prefix() default "";
+    String prefix() default "tuzaku";
 
 }
