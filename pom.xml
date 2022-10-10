@@ -10,10 +10,10 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>bkhn.att</groupId>
-    <artifactId>SpringBootTech</artifactId>
+    <artifactId>awesome-spring-boot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>SpringBootTech</name>
+    <name>awesome-spring-boot</name>
     <description>Spring Boot pratice with lots of technologies</description>
 
     <properties>

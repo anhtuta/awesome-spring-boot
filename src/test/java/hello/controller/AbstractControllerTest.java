@@ -21,10 +21,10 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hello.SpringBootTechApplication;
+import hello.AwesomeSpringBootApplication;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = SpringBootTechApplication.class)
+@SpringBootTest(classes = AwesomeSpringBootApplication.class)
 @WebAppConfiguration
 public class AbstractControllerTest {
 

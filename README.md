@@ -1,4 +1,4 @@
-# SpringBootTech
+# AwesomeSpringBoot
 Spring Boot pratice with lots of technologies
 
 # Swagger local
