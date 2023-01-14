@@ -2,6 +2,7 @@ package hello.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import hello.service.FileService;
 @RestController
 @RequestMapping("/api/file")
 public class FileController {
-    
+
     @Autowired
     private FileService fileService;
 
@@ -27,5 +28,13 @@ public class FileController {
     @GetMapping
     public ResponseEntity<ByteArrayResource> getFile(@RequestParam("name") String name) {
         return fileService.getFile(name);
+    }
+
+    /**
+     * Doesn't work! Cannot download file using this API
+     */
+    @GetMapping(value = "/v2", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> getFile2(@RequestParam("name") String name) {
+        return fileService.getFile2(name);
     }
 }

@@ -11,4 +11,6 @@ public interface FileService {
 
     public ResponseEntity<ByteArrayResource> getFile(String name);
 
+    public ResponseEntity<byte[]> getFile2(String name);
+
 }

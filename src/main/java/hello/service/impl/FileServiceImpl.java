@@ -13,9 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import hello.common.Result;
 import hello.service.FileService;
@@ -24,10 +27,10 @@ import hello.utils.ObjectUtils;
 
 @Service
 public class FileServiceImpl implements FileService {
-    
+
     @Value("${uploadFolder}")
     private String uploadFolder;
-    
+
     @Autowired
     private ServletContext servletContext;
 
@@ -57,14 +60,14 @@ public class FileServiceImpl implements FileService {
         if (file.isEmpty()) {
             return null;
         }
-        
+
         System.out.println("name: " + file.getOriginalFilename());
 
         File uploadFolderDir = new File(uploadFolder);
         if (!uploadFolderDir.exists()) {
             uploadFolderDir.mkdirs();
         }
-        
+
         String originalName = file.getOriginalFilename();
         String extension = FilenameUtils.getExtension(originalName);
         String filename = FilenameUtils.getBaseName(originalName) + "_" + System.currentTimeMillis() + "." + extension;
@@ -88,12 +91,33 @@ public class FileServiceImpl implements FileService {
 
             return ResponseEntity.ok()
                     // Content-Disposition
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + ObjectUtils.getOrDefaultStr(path.getFileName()))
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment;filename=" + ObjectUtils.getOrDefaultStr(path.getFileName()))
                     // Content-Type
                     .contentType(mediaType) //
                     // Content-Lengh
                     .contentLength(data.length) //
                     .body(resource);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Refer from MMS system in Ascend VN, but this function doesn't work!!!
+     */
+    @Override
+    public ResponseEntity<byte[]> getFile2(String name) {
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", name));
+
+        Path path = Paths.get(uploadFolder + "/" + name);
+        byte[] data;
+        try {
+            data = Files.readAllBytes(path);
+            new ResponseEntity<>(data, headers, HttpStatus.OK);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

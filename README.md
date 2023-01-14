@@ -2,7 +2,9 @@
 Spring Boot pratice with lots of technologies
 
 # Swagger local
-http://localhost:9010/boot-tech/swagger-ui.html
+http://localhost:9010/asb/swagger-ui.html
+
+Sign in using accounts: admin/1111, att/1111, storemg/1111, bookmg/1111
 
 # How to use
 - First, run Redis if bean TokenStore using `RedisTokenStore` instead of `InMemoryTokenStore`
