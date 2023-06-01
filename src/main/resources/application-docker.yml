@@ -1,0 +1,34 @@
+redis:
+  host: localhost
+  port: 6379
+
+server:
+  port: 9010
+  servlet:
+    context-path: /asb
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # abs_mysqlserver is the container we must run first
+    url: jdbc:mysql://abs_mysqlserver/abs?characterEncoding=utf8&verifyServerCertificate=false&useSSL=true
+    username: abs
+    password: abs1111
+  jackson:
+    serialization:
+      indent-output: true
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+        type: trace
+        use_sql_comments: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  flyway:
+    enabled: true
+
+uploadFolder: D:/Documents/Others/springboot-tech-upload-folder
