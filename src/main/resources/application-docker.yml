@@ -10,10 +10,10 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # abs_mysqlserver is the container we must run first
-    url: jdbc:mysql://abs_mysqlserver/abs?characterEncoding=utf8&verifyServerCertificate=false&useSSL=true
-    username: abs
-    password: abs1111
+    # asb_mysqlserver is the container we must run first
+    url: jdbc:mysql://asb_mysqlserver/asb?characterEncoding=utf8&verifyServerCertificate=false&useSSL=true
+    username: asb
+    password: asb1111
   jackson:
     serialization:
       indent-output: true
@@ -31,4 +31,4 @@ spring:
   flyway:
     enabled: true
 
-uploadFolder: abs-upload
+uploadFolder: asb-upload

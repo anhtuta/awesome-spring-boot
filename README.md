@@ -20,28 +20,28 @@ Sign in using accounts: admin/1111, att/1111, storemg/1111, bookmg/1111
 
 - Create volume for MySQL
   ```
-  docker volume create abs_mysql_data
-  docker volume create abs_mysql_config
+  docker volume create asb_mysql_data
+  docker volume create asb_mysql_config
   ```
-- Create network for MySQL: `docker network create abs_mysqlnet`
+- Create network for MySQL: `docker network create asb_mysqlnet`
 - Run MySQL in a container and attach to the volumes and network we created above
   ```
-  docker run -it --rm -d -v abs_mysql_data:/var/lib/mysql \
-  -v abs_mysql_config:/etc/mysql/conf.d \
-  --network abs_mysqlnet \
-  --name abs_mysqlserver \
-  -e MYSQL_USER=abs -e MYSQL_PASSWORD=abs1111 \
-  -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=abs \
+  docker run -it --rm -d -v asb_mysql_data:/var/lib/mysql \
+  -v asb_mysql_config:/etc/mysql/conf.d \
+  --network asb_mysqlnet \
+  --name asb_mysqlserver \
+  -e MYSQL_USER=asb -e MYSQL_PASSWORD=asb1111 \
+  -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=asb \
   -p 3307:3306 mysql:8.0
   ```
-  Now, in Spring config, we need to connect to `abs_mysqlserver` instead of `localhost:3306`. View [application-docker.yml](./src/main/resources/application-docker.yml) for more detail
-- Build image (if you want to remove previous build, run `docker image rm abs:1.0.0` first): `docker build --tag abs:1.0.0 .`
+  Now, in Spring config, we need to connect to `asb_mysqlserver` instead of `localhost:3306`. View [application-docker.yml](./src/main/resources/application-docker.yml) for more detail
+- Build image (if you want to remove previous build, run `docker image rm asb:1.0.0` first): `docker build --tag asb:1.0.0 .`
 - Run container, also attach to the network we created above:
   ```
   docker run --rm -d \
-  --name abs_server \
-  --network abs_mysqlnet \
-  -p 9010:9010 abs:1.0.0
+  --name asb_server \
+  --network asb_mysqlnet \
+  -p 9010:9010 asb:1.0.0
   ```
 
 Done rồi đó, check thử image vừa được tạo:
@@ -49,7 +49,7 @@ Done rồi đó, check thử image vừa được tạo:
 ```bash
 ➜  awesome-spring-boot git:(master) ✗ docker images
 REPOSITORY                                 TAG           IMAGE ID       CREATED         SIZE
-abs                                        1.0.0         54c857f8b2af   4 minutes ago   369MB
+asb                                        1.0.0         54c857f8b2af   4 minutes ago   369MB
 mysql                                      8.0           fe893ca74649   7 days ago      592MB
 ```
 
@@ -58,8 +58,8 @@ Ta thấy có image của backend và của mysql. Check thử containers xem:
 ```bash
 ➜  awesome-spring-boot git:(master) ✗ docker ps
 CONTAINER ID   IMAGE          COMMAND                  CREATED             STATUS             PORTS                               NAMES
-41636579026b   abs:1.0.0      "./mvnw spring-boot:…"   6 minutes ago       Up 6 minutes       0.0.0.0:9010->9010/tcp              abs_server
-e8b77575bbb9   mysql:8.0      "docker-entrypoint.s…"   About an hour ago   Up About an hour   33060/tcp, 0.0.0.0:3307->3306/tcp   abs_mysqlserver
+41636579026b   asb:1.0.0      "./mvnw spring-boot:…"   6 minutes ago       Up 6 minutes       0.0.0.0:9010->9010/tcp              asb_server
+e8b77575bbb9   mysql:8.0      "docker-entrypoint.s…"   About an hour ago   Up About an hour   33060/tcp, 0.0.0.0:3307->3306/tcp   asb_mysqlserver
 ```
 
 Giờ vào swagger mà xem. Thử upload rồi download file xem có được ko. Đầu tiên phải login để lấy access token (acc nào cũng được), sau đó test api upload. Vào bên trong container để xem có upload được ko (note: dấu `#` là đang dùng account `root` nhé):
@@ -72,13 +72,13 @@ Giờ vào swagger mà xem. Thử upload rồi download file xem có được ko
 total 44
 drwxr-xr-x 1 root root  4096 Jun  1 09:07 .
 drwxr-xr-x 1 root root  4096 Jun  1 09:06 ..
-drwxr-xr-x 2 root root  4096 Jun  1 09:07 abs-upload
+drwxr-xr-x 2 root root  4096 Jun  1 09:07 asb-upload
 drwxr-xr-x 3 root root  4096 Jun  1 06:48 .mvn
 -rwxr-xr-x 1 root root 10284 May 31 17:34 mvnw
 -rw-r--r-- 1 root root  6455 May 31 16:03 pom.xml
 drwxr-xr-x 4 root root  4096 Jun  1 09:06 src
 drwxr-xr-x 7 root root  4096 Jun  1 09:06 target
-# cd abs-upload
+# cd asb-upload
 # ls -la
 total 1324
 drwxr-xr-x 2 root root    4096 Jun  1 09:07 .
