@@ -31,4 +31,4 @@ spring:
   flyway:
     enabled: true
 
-uploadFolder: D:/Documents/Others/springboot-tech-upload-folder
+uploadFolder: abs-upload
