@@ -35,7 +35,7 @@ Sign in using accounts: admin/1111, att/1111, storemg/1111, bookmg/1111
   -p 3307:3306 mysql:8.0
   ```
   Now, in Spring config, we need to connect to `asb_mysqlserver` instead of `localhost:3306`. View [application-docker.yml](./src/main/resources/application-docker.yml) for more detail
-- Build image (if you want to remove previous build, run `docker image rm asb:1.0.0` first): `docker build --tag asb:1.0.0 .`
+- Build image (if you want to remove previous build, run `docker image rm asb:1.0.0` first), note the dot at the and of the file, which denotes the current folder: `docker build --tag asb:1.0.0 .`
 - Run container, also attach to the network we created above:
   ```
   docker run --rm -d \
@@ -88,7 +88,15 @@ drwxr-xr-x 1 root root    4096 Jun  1 09:07 ..
 
 Oke, vậy là upload được rồi
 
-Ref: https://docs.docker.com/language/java/
+## Run local using docker compose
+
+Create a Compose file to start our development container and the MySQL database using a single command.
+
+Then, run following command is enough: `docker-compose -f docker-compose.dev.yml up --build`
+
+## Ref
+
+https://docs.docker.com/language/java/
 
 # Technologies are used
 
