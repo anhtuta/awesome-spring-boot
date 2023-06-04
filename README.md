@@ -18,6 +18,8 @@ Sign in using accounts: admin/1111, att/1111, storemg/1111, bookmg/1111
 
 ## Run local using docker
 
+Ta cần tạo container MySQL trước, tạo cả volume và network cho nó, rồi mới tạo container cho spring app dùng chung network vừa tạo
+
 - Create volume for MySQL
   ```
   docker volume create asb_mysql_data
@@ -88,15 +90,15 @@ drwxr-xr-x 1 root root    4096 Jun  1 09:07 ..
 
 Oke, vậy là upload được rồi
 
+Ref: https://docs.docker.com/language/java/build-images/
+
 ## Run local using docker compose
 
 Create a Compose file to start our development container and the MySQL database using a single command.
 
 Then, run following command is enough: `docker-compose -f docker-compose.dev.yml up --build`
 
-## Ref
-
-https://docs.docker.com/language/java/
+Ref: https://docs.docker.com/language/java/develop/
 
 # Technologies are used
 
