@@ -100,6 +100,21 @@ Then, run following command is enough: `docker-compose -f docker-compose.dev.yml
 
 Ref: https://docs.docker.com/language/java/develop/
 
+# Configure CI/CD dùng Github actions
+
+Có thể vào tab Actions trên github repo, rồi làm theo hướng dẫn, hoặc vào trang docs của docker để xem (linh ref ở dưới) cụ thể:
+
+- Đầu tiên vào docker hub, login xong lấy access token
+- Tiếp theo vào github repo > Settings > Secrets and variables > Actions
+- Tạo 2 biến sau:
+  - `DOCKERHUB_USERNAME`: username của bạn, ex: `tuzaku`
+  - `DOCKERHUB_TOKEN`: access token vừa tạo ở trên
+- Create action trên Github (vào tab action rồi search sẽ thấy), hoặc tạo file `docker-image.yml` rồi push lên cũng đc
+- Tạo nội dung file yml giống như trang docs.docker hướng dẫn
+- Commit là xong
+
+Ref: https://docs.docker.com/language/java/configure-ci-cd/ (Note: this ref link is not entirely identical to what GitHub guides)
+
 # Technologies are used
 
 - Swagger
