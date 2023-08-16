@@ -110,8 +110,87 @@ Có thể vào tab Actions trên github repo, rồi làm theo hướng dẫn, ho
   - `DOCKERHUB_USERNAME`: username của bạn, ex: `tuzaku`
   - `DOCKERHUB_TOKEN`: access token vừa tạo ở trên
 - Create action trên Github (vào tab action rồi search sẽ thấy), hoặc tạo file `docker-image.yml` rồi push lên cũng đc
-- Tạo nội dung file yml giống như trang docs.docker hướng dẫn
-- Commit là xong
+- Tạo nội dung file yml giống như trang docs.docker hướng dẫn, cụ thể:
+
+  ```yml
+  name: Docker Image CI
+
+  on:
+    push:
+      branches: ["master"]
+    pull_request:
+      branches: ["master"]
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        - name: Login to Docker Hub
+          uses: docker/login-action@v2
+          with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v2
+        - name: Build and push
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            target: development
+            file: ./Dockerfile
+            push: true
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/awesome-spring-boot:latest
+  ```
+
+- Commit là xong. Sau khi commit và build action xong, vào docker hub sẽ thấy image vừa đc push lên rỏi đó: https://hub.docker.com/repository/docker/tuzaku/awesome-spring-boot/general
+- Pull cái image này về thử xem: `docker pull tuzaku/awesome-spring-boot`:
+
+  ```
+  tahuyen@MacBook-Pro-cua-TA ~ % docker pull tuzaku/awesome-spring-boot
+  Using default tag: latest
+  latest: Pulling from tuzaku/awesome-spring-boot
+  9d19ee268e0d: Pull complete
+  8a1d9603a222: Pull complete
+  40550a0c5d13: Pull complete
+  031298b013cc: Pull complete
+  997b6eda5add: Pull complete
+  b6575dd9b707: Pull complete
+  83ad0640e201: Pull complete
+  8ee75f831473: Pull complete
+  07c6f90b3a6f: Pull complete
+  cc17a7b15e54: Pull complete
+  Digest: sha256:74f505efba68b05ea2283766fde3dc645dac5186fc96c9b1bfdc4edc95413677
+  Status: Downloaded newer image for tuzaku/awesome-spring-boot:latest
+  docker.io/tuzaku/awesome-spring-boot:latest
+
+  What's Next?
+    View summary of image vulnerabilities and recommendations → docker scout quickview tuzaku/awesome-spring-boot
+  ```
+
+- Nó nặng tận 430MB
+  ![](./images/asb-image.png)
+- Ấn run thử thì lỗi!!! Do ko tìm thấy server MySQL này: `asb_mysqlserver`
+  ```
+  2023-08-16 21:38:23 Caused by: java.net.UnknownHostException: asb_mysqlserver: Name or service not known
+  2023-08-16 21:38:23     at java.net.Inet4AddressImpl.lookupAllHostAddr(Native Method)
+  2023-08-16 21:38:23     at java.net.InetAddress$2.lookupAllHostAddr(InetAddress.java:867)
+  2023-08-16 21:38:23     at java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1302)
+  2023-08-16 21:38:23     at java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:815)
+  2023-08-16 21:38:23     at java.net.InetAddress.getAllByName0(InetAddress.java:1291)
+  2023-08-16 21:38:23     at java.net.InetAddress.getAllByName(InetAddress.java:1144)
+  2023-08-16 21:38:23     at java.net.InetAddress.getAllByName(InetAddress.java:1065)
+  2023-08-16 21:38:23     at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:132)
+  2023-08-16 21:38:23     at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:65)
+  2023-08-16 21:38:23     ... 38 common frames omitted
+  2023-08-16 21:38:23 [INFO] ------------------------------------------------------------------------
+  2023-08-16 21:38:23 [INFO] BUILD FAILURE
+  2023-08-16 21:38:23 [INFO] ------------------------------------------------------------------------
+  2023-08-16 21:38:23 [INFO] Total time:  32.996 s
+  2023-08-16 21:38:23 [INFO] Finished at: 2023-08-16T14:38:23Z
+  ```
+- Túm lại việc tạo action này đã build và push thành công image dựa theo `Dockerfile` lên docker hub rồi, nhưng có lẽ image này ko tự chạy đc, cần chạy image mysql trc...
 
 Ref: https://docs.docker.com/language/java/configure-ci-cd/ (Note: this ref link is not entirely identical to what GitHub guides)
 
