@@ -1,6 +1,11 @@
 # AwesomeSpringBoot
 
-Spring Boot pratice with lots of technologies
+Spring Boot practice with lots of technologies
+
+Requires:
+
+- Java 8 (currently NOT support Java 17)
+- Mysql 8 (support MySQL 5.7)
 
 # Swagger local
 
