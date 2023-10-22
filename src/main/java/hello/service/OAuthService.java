@@ -1,10 +1,10 @@
 package hello.service;
 
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import hello.common.Result;
 import hello.model.request.SigninRequest;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
 public interface OAuthService {
 

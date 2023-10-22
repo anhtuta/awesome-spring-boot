@@ -1,10 +1,13 @@
 package hello.service.impl;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import hello.common.Constants;
+import hello.common.Result;
+import hello.common.StatusType;
+import hello.config.security.AuthorizationServerConfig;
+import hello.exception.RestException;
+import hello.model.request.SigninRequest;
+import hello.service.OAuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,13 +16,11 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.TokenRequest;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.stereotype.Service;
-import hello.common.Constants;
-import hello.common.Result;
-import hello.common.StatusType;
-import hello.config.security.AuthorizationServerConfig;
-import hello.exception.RestException;
-import hello.model.request.SigninRequest;
-import hello.service.OAuthService;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class OAuthServiceImpl implements OAuthService {

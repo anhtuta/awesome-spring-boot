@@ -1,13 +1,10 @@
 package hello.service.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.ServletContext;
+import hello.common.Result;
+import hello.service.FileService;
+import hello.utils.MediaTypeUtils;
+import hello.utils.ObjectUtils;
+import jakarta.servlet.ServletContext;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,10 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
-import hello.common.Result;
-import hello.service.FileService;
-import hello.utils.MediaTypeUtils;
-import hello.utils.ObjectUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class FileServiceImpl implements FileService {

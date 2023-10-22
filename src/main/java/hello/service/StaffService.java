@@ -1,9 +1,9 @@
 package hello.service;
 
-import javax.validation.Valid;
-import org.springframework.data.domain.Pageable;
 import hello.common.Result;
 import hello.model.request.StaffRequest;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 
 public interface StaffService {
 

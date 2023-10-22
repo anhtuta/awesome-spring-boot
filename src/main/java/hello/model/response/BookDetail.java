@@ -1,11 +1,12 @@
 package hello.model.response;
 
-import java.util.Date;
-import java.util.List;
-import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
+import java.util.List;
 
 // JPA yêu cầu 1 entity mới có thể dùng được JpaRepository,
 // do đó tạo 1 model rồi map từ native query sang model này là KHÔNG được!

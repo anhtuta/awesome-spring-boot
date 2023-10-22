@@ -1,7 +1,9 @@
 package hello.config.aop;
 
-import java.lang.reflect.Method;
-import javax.servlet.http.HttpServletRequest;
+import hello.common.StatusType;
+import hello.exception.RestException;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -11,12 +13,11 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import hello.common.StatusType;
-import hello.exception.RestException;
-import lombok.extern.slf4j.Slf4j;
+
+import java.lang.reflect.Method;
 
 @Component
 @Aspect
@@ -26,7 +27,7 @@ public class BootTechAspect {
      * This checking is just for demo! Tất cả API có annotation RequireNonsense đều phải gửi kèm 1
      * header nonsense là 1 string bắt đầu = giá trị của thuộc tính prefix trong
      * annotation @RequireNonsense.
-     * 
+     *
      * Note: value = @annotation(requireNons) chứ ko phải @annotation(RequireNonsense) nhé!
      * Dùng @annotation(RequireNonsense) thì ko thêm được tham số thứ 2 (RequireNonsense
      * requireNons)
@@ -39,7 +40,7 @@ public class BootTechAspect {
                         .getRequest();
 
         String nonsense = request.getHeader("nonsense");
-        if (StringUtils.isEmpty(nonsense)) {
+        if (ObjectUtils.isEmpty(nonsense)) {
             throw new RestException(StatusType.NONSENSE_IS_MISSING);
         }
 

@@ -1,15 +1,5 @@
 package hello.service.impl;
 
-import java.util.List;
-import java.util.Optional;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.stereotype.Service;
 import hello.common.ListRes;
 import hello.common.Result;
 import hello.common.StatusType;
@@ -22,6 +12,17 @@ import hello.repository.StaffRepository;
 import hello.repository.StoreRepository;
 import hello.service.StaffService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -58,7 +59,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Result createStaff(StaffRequest staffRequest) {
         Optional<Store> storeOp = storeRepository.findById(staffRequest.getStoreId());
-        if (!storeOp.isPresent()) {
+        if (storeOp.isEmpty()) {
             throw new RestException(StatusType.STORE_NOT_FOUND);
         }
 
@@ -72,12 +73,12 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Result updateStaff(int id, StaffRequest staffRequest) {
         Optional<Staff> staffOp = staffRepository.findById(id);
-        if (!staffOp.isPresent()) {
+        if (staffOp.isEmpty()) {
             throw new RestException(StatusType.STAFF_NOT_FOUND);
         }
 
         Optional<Store> storeOp = storeRepository.findById(staffRequest.getStoreId());
-        if (!storeOp.isPresent()) {
+        if (storeOp.isEmpty()) {
             throw new RestException(StatusType.STORE_NOT_FOUND);
         }
 
@@ -91,7 +92,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Result deleteStaff(int id) {
         Optional<Staff> staffOp = staffRepository.findById(id);
-        if (!staffOp.isPresent()) {
+        if (staffOp.isEmpty()) {
             throw new RestException(StatusType.STAFF_NOT_FOUND);
         }
 
