@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <profiles version="25">
-    <profile kind="CodeFormatterProfile" name="GoogleStyle" version="25">
+    <profile kind="CodeFormatterProfile" name="GoogleStyle_NOT_USE_ANYMORE_use_style_in_notes_repo" version="25">
         <setting id="org.eclipse.jdt.core.formatter.insert_space_after_ellipsis" value="insert"/>
         <setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_enum_declarations" value="insert"/>
         <setting id="org.eclipse.jdt.core.formatter.insert_space_before_comma_in_allocation_expression" value="do not insert"/>
